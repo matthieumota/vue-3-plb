@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Vue JS</title>
+    <style>
+      .bold-700 {
+        font-weight: 700;
+      }
+
+      .blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="increment(-1)" v-if="count > 0">-</button>
+      <!-- Interpolation Mustache -->
+      <span :title="count">{{ count }}</span>
+      <button @click="increment(1)" :disabled="count >= 10">+</button>
+
+      <p v-if="count > 5">Le compteur est à 5+</p>
+      <p v-else-if="count === 5">Le compteur est à 5</p>
+      <p v-else>Le compteur est à 5-</p>
+
+      <p>{{ count + 1 }}</p>
+      <p>{{ Math.random() }}</p>
+      <p>{{ 'test'.toUpperCase() }}</p>
+
+      <ul>
+        <li v-for="(contact, index) of contacts" :key="index"
+          class="default"
+          :class="{
+            'bold-700': contacts.length >= 3,
+            blue: contact === 'Fiorella'
+          }"
+        >
+          {{ index }}: {{ contact }}
+        </li>
+      </ul>
+
+      <ul>
+        <template v-for="(contact, index) of contacts" :key="index">
+          <li v-if="contact === 'Marina'">
+            {{ index }}: {{ contact }}
+          </li>
+        </template>
+      </ul>
+
+      <ul>
+        <li v-for="car of cars" :key="car.id">
+            {{ car.name }}
+        </li>
+      </ul>
+
+      <button type="button" class="close" @click="close" v-if="opened">
+        <span>&times;</span>
+      </button>
+
+      <h1>{{ title }}</h1>
+      <input type="text" v-model="title">
+      <input type="text"
+        :value="title"
+        @input="event => title = event.target.value"
+      >
+
+      <input type="checkbox" v-model="opened">
+
+      <input type="checkbox" value="Matthieu" v-model="contacts"> Matthieu
+      <input type="checkbox" value="Marina" v-model="contacts"> Marina
+      <input type="checkbox" value="Fiorella" v-model="contacts"> Fiorella
+    </div>
+
+    <script type="module">
+      import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+      createApp({
+        setup() {
+          const count = ref(0)
+          const contacts = ref(['Matthieu', 'Marina'])
+          const cars = ref([
+            { id: 1, name: 'BMW' },
+            { id: 2, name: 'Porsche' },
+          ])
+          const opened = ref(true)
+          const title = ref('Un titre')
+
+          // const increment = (value) => count.value += value
+          const increment = (value) => {
+            count.value += value
+            console.log(count)
+          }
+
+          const close = (event) => {
+            console.log(event)
+            opened.value = false
+            setTimeout(() => opened.value = true, 2000)
+          }
+
+          return { count, increment, contacts, cars, opened, close, title }
+        },
+      }).mount('#app')
+    </script>
+  </body>
+</html>
