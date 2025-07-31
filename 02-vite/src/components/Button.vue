@@ -5,11 +5,18 @@ defineProps<{
   color?: string
 }>()
 
+const emit = defineEmits<{
+  tap: [value: number],
+}>()
+
 const loading = ref(false)
 
 const handleClick = () => {
   loading.value = true
-  setTimeout(() => loading.value = false, 2500)
+  setTimeout(() => {
+    loading.value = false
+    emit('tap', Math.random())
+  }, 500)
 }
 </script>
 

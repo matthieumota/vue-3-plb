@@ -28,6 +28,16 @@ const product = ref<ProductType>({
     { color: 'red', image: 'https://www.francebleu.fr/s3/cruiser-production-eu3/2025/02/33fe1bd1-39e9-431f-a932-0bee063e1ec9/1200x680_sc_250305-fich-diff-chat-mariia-zotova-getty.jpg', price: 2 },
   ],
 })
+
+const products = ref([1, 2, 3])
+
+const addProduct = (value: number) => {
+  products.value.push(value)
+}
+
+const removeProduct = () => {
+  products.value.splice(0, 1) // Supprime le 1er élément
+}
 </script>
 
 <template>
@@ -36,8 +46,14 @@ const product = ref<ProductType>({
   <p v-once>Valeur de départ : {{ value }}</p>
   <button @click="increment">+</button>
 
-  <Button>Valider</Button>
-  <Button color="red">Envoyer</Button>
+  <ul>
+    <li v-for="product in products">
+      {{ product }}
+    </li>
+  </ul>
+
+  <Button @tap="addProduct">Valider</Button>
+  <Button @tap="removeProduct" color="red">Envoyer</Button>
   <Button>Sauvegarder</Button>
 
   <div>
