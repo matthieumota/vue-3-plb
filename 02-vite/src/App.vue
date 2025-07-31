@@ -1,8 +1,18 @@
+<script setup lang="ts">
+import routes from './routes'
+
+const menu = routes.map(route => ({
+  to: route.path,
+  label: route.meta?.title,
+}))
+</script>
+
 <template>
   <header class="shadow mb-4">
     <nav class="max-w-5xl mx-auto flex gap-4">
-      <RouterLink to="/" class="py-4" active-class="text-blue-600 font-bold">Accueil</RouterLink>
-      <RouterLink to="/a-propos" class="py-4" active-class="text-blue-600 font-bold">A propos</RouterLink>
+      <RouterLink v-for="link in menu" :to="link.to" class="py-4" active-class="text-blue-600 font-bold">
+        {{ link.label }}
+      </RouterLink>
     </nav>
   </header>
 
