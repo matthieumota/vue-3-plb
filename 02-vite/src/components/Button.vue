@@ -16,7 +16,7 @@ const handleClick = () => {
   setTimeout(() => {
     loading.value = false
     emit('tap', Math.random())
-  }, 0)
+  }, 2000)
 }
 
 const color = ref(props.color)

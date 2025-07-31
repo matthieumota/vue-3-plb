@@ -25,14 +25,24 @@ const product = ref<ProductType>({
   ],
 })
 
-const products = ref([1, 2, 3])
+let data
+
+try {
+  data = JSON.parse(localStorage.getItem('products') || '[1, 2, 3]')
+} catch {
+  data = [1, 2, 3]
+}
+
+const products = ref(data)
 
 const addProduct = (value: number) => {
   products.value.push(value)
+  localStorage.setItem('products', JSON.stringify(products.value))
 }
 
 const removeProduct = () => {
   products.value.splice(0, 1) // Supprime le 1er élément
+  localStorage.setItem('products', JSON.stringify(products.value))
 }
 
 // const total = ref(10)
