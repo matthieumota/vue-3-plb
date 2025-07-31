@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   color?: string
 }>()
 
@@ -18,6 +18,20 @@ const handleClick = () => {
     emit('tap', Math.random())
   }, 0)
 }
+
+const color = ref(props.color)
+
+let timeout: number
+
+onMounted(() => {
+  timeout = setTimeout(() => {
+    color.value = ['red', 'blue'][Math.floor(Math.random() * 2)]
+  }, 2000)
+})
+
+onUnmounted(() => {
+  clearTimeout(timeout)
+})
 </script>
 
 <template>
