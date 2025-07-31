@@ -2,11 +2,7 @@
 import { computed, ref } from 'vue'
 import Button from './components/Button.vue'
 import Product, { type Product as ProductType } from './components/Product.vue'
-
-const value = ref(0)
-
-const increment = () => value.value++
-const decrement = () => value.value--
+import Counter from './components/Counter.vue'
 
 const name = ref('Fiorella')
 const reverseName = computed(() => {
@@ -38,14 +34,13 @@ const addProduct = (value: number) => {
 const removeProduct = () => {
   products.value.splice(0, 1) // Supprime le 1er élément
 }
+
+// const total = ref(10)
+const counters = ref([0, 5, 5, 1, 2, 3])
+const total = computed(() => counters.value.reduce((a, b) => a + b, 0))
 </script>
 
 <template>
-  <button @click="decrement">-</button>
-  <h1>{{ value }}</h1>
-  <p v-once>Valeur de départ : {{ value }}</p>
-  <button @click="increment">+</button>
-
   <ul>
     <li v-for="product in products">
       {{ product }}
@@ -62,6 +57,15 @@ const removeProduct = () => {
   </div>
 
   <Product :product />
+
+  <h1>Total: {{ total }}</h1>
+  <!-- <Counter @incremented="total += $event" />
+  <Counter :start="5" :max="10" @incremented="total += $event" />
+  <Counter :start="5" :max="10" @incremented="total += $event" /> -->
+
+  {{ counters }}
+  <Counter v-for="(counter, index) in counters" :start="counter" :max="index > 0 ? 10 : Infinity" @incremented="counters[index] = $event" />
+  <button @click="counters.push(0)">Ajouter</button>
 </template>
 
 <style scoped>

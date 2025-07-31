@@ -16,7 +16,7 @@ const handleClick = () => {
   setTimeout(() => {
     loading.value = false
     emit('tap', Math.random())
-  }, 500)
+  }, 0)
 }
 </script>
 
