@@ -29,7 +29,7 @@ const { login, logout } = store
 
       <div class="flex gap-2">
         <p v-if="isLogged">{{ user?.name }}</p>
-        <button @click="login" v-if="!isLogged">Connexion</button>
+        <button @click="login('Toto')" v-if="!isLogged">Connexion</button>
         <button @click="logout" v-else>Déconnexion</button>
       </div>
     </div>

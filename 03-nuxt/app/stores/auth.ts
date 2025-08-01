@@ -7,8 +7,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLogged = computed(() => !!user.value)
 
-  const login = () => {
-    user.value = { name: 'Toto' }
+  const login = async (name: string) => {
+    const response = await $fetch('/api/login', { method: 'POST', body: { name } })
+    user.value = response
   }
 
   const logout = () => {
